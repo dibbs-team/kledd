@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "203339636612",
+    "firebase_url": "https://kledd-4c0ab.firebaseio.com",
+    "project_id": "kledd-4c0ab",
+    "storage_bucket": "kledd-4c0ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203339636612:android:5e9092f1a3d184f94747d1",
+        "android_client_info": {
+          "package_name": "se.lkpg.kledd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203339636612-6bud3e1kev9l92ersnccn6q9ci8qf5aa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjLCHhN50K9zyiIbUWzXm8XTxEK5eZywI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203339636612-6bud3e1kev9l92ersnccn6q9ci8qf5aa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
