@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "203339636612-l93m0a2ienkdd1el85u5g89bga6bjemb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "se.lkpg.kledd",
+            "certificate_hash": "47375978f12c2695a7f54c528f817f43ddfc2582"
+          }
+        },
+        {
           "client_id": "203339636612-6bud3e1kev9l92ersnccn6q9ci8qf5aa.apps.googleusercontent.com",
           "client_type": 3
         }

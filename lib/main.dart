@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/auth_screen.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Scaffold(),
+      home: AuthScreen(),
     );
   }
 }
