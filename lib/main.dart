@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'screens/auth_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +17,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AuthScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (ctx, userSnapshot) {
+          // Show splash screen while checking if user is signed in.
+          if (userSnapshot.connectionState == ConnectionState.waiting) {
+            return SplashScreen();
+          }
+          var signedIn = userSnapshot.hasData;
+          return signedIn ? Scaffold() : AuthScreen();
+        },
+      ),
     );
   }
 }
