@@ -23,7 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Align(
             alignment: Alignment.center,
             child: LoginButton(
-              title: 'Sign in with Google',
+              service: 'Google',
               onLoginUser: _handleGoogleSignIn,
             ),
           ),
