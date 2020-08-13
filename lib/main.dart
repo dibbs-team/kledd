@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'screens/auth_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/tab_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
             return SplashScreen();
           }
           var signedIn = userSnapshot.hasData;
-          return signedIn ? Scaffold() : AuthScreen();
+          return signedIn ? TabScreen() : AuthScreen();
         },
       ),
     );
