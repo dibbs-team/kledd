@@ -1,0 +1,19 @@
+{
+  "@@last_modified": "2020-08-13T13:08:32.831027",
+  "title": "Kledd",
+  "@title": {
+    "description": "App title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signInButtonText": "Sign in with {service}",
+  "@signInButtonText": {
+    "description": "Text on sign in button",
+    "type": "text",
+    "placeholders": {
+      "service": {
+        "example": "Google"
+      }
+    }
+  }
+}
