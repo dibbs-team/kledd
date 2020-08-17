@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   intl: ^0.16.1
   intl_translation: ^0.17.10
+  paginate_firestore: ^0.1.2
 
 dev_dependencies:
   flutter_test:
