@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileScreen extends StatelessWidget {
+  void signOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("Building profile");
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile Screen"),
       ),
       body: Center(
-        child: Text("Profile Screen"),
+        // TODO: Remove when profile screen is updated.
+        child: RaisedButton(
+          child: Text("Sign out"),
+          onPressed: signOut,
+        ),
       ),
     );
   }
