@@ -32,7 +32,11 @@ dependencies:
     sdk: flutter
   intl: ^0.16.1
   intl_translation: ^0.17.10
+<<<<<<< HEAD
   paginate_firestore: ^0.1.2
+=======
+  smooth_page_indicator: ^0.2.0
+>>>>>>> feat: startup info carousel
 
 dev_dependencies:
   flutter_test:

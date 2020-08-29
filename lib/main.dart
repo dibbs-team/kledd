@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        backgroundColor: Color(0xfff1f9ff),
       ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.onAuthStateChanged,
