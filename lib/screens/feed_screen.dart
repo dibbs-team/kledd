@@ -28,11 +28,14 @@ class _FeedScreenState extends State<FeedScreen> {
         title: Text("Feed Screen"),
       ),
       body: RefreshIndicator(
+        backgroundColor: Theme.of(context).backgroundColor,
         onRefresh: _reloadProducts,
         child: PaginateFirestore(
-          itemBuilderType: PaginateBuilderType.listView,
+          itemBuilderType: PaginateBuilderType.gridView,
           itemBuilder: (index, ctx, documentSnapshot) => ProductItem(
-            documentSnapshot.data['title'],
+            title: documentSnapshot.data['title'],
+            size: "plusSize",
+            brand: "Eldordado",
           ),
           query: Firestore.instance.collection('products').orderBy('title'),
           emptyDisplay: NoProductsDisplay(),
