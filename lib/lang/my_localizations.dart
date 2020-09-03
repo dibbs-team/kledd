@@ -46,4 +46,9 @@ class MyLocalizations {
         desc: 'Text on sign in button',
         examples: const {'service': 'Google'},
       );
+
+  String get authFailed =>
+      Intl.message('Authentication failed. Please try again.',
+          name: 'authFailed',
+          desc: 'Shown in snackbar if authentication is unsuccessful');
 }

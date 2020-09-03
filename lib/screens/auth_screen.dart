@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../widgets/auth/login_button.dart';
+import '../lang/my_localizations.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -13,10 +14,14 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _scaffoldKey = GlobalKey<ScaffoldState>(); //* For showing SnackBar.
 
   @override
   Widget build(BuildContext context) {
+    final l10n = MyLocalizations.of(context);
+
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: Container(
           padding: EdgeInsets.all(50),
@@ -24,7 +29,11 @@ class _AuthScreenState extends State<AuthScreen> {
             alignment: Alignment.center,
             child: LoginButton(
               service: 'Google',
-              onLoginUser: _handleGoogleSignIn,
+              onLoginUser: () {
+                _handleGoogleSignIn().catchError(
+                  (e) => _showSnackbar(l10n.authFailed),
+                );
+              },
             ),
           ),
         ),
@@ -46,18 +55,27 @@ class _AuthScreenState extends State<AuthScreen> {
     final FirebaseUser user =
         (await _auth.signInWithCredential(credential)).user;
 
-    await saveUser(user);
+    await _saveUser(user);
   }
-}
 
-/// Saves user information to Firestore.
-Future<void> saveUser(FirebaseUser user) async {
-  Firestore.instance.collection('users').document(user.uid).setData(
-    {
-      'display_name': user.displayName,
-      'email': user.email,
-      'profile_image_url': user.photoUrl,
-      'phone_number': user.phoneNumber,
-    },
-  );
+  /// Saves user information to Firestore.
+  Future<void> _saveUser(FirebaseUser user) async {
+    Firestore.instance.collection('users').document(user.uid).setData(
+      {
+        'display_name': user.displayName,
+        'email': user.email,
+        'profile_image_url': user.photoUrl,
+        'phone_number': user.phoneNumber,
+      },
+    );
+  }
+
+  /// Shows a SnackBar with the given message.
+  void _showSnackbar(String message) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
 }
