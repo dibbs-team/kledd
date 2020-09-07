@@ -1,64 +1,38 @@
 import 'package:flutter/material.dart';
 
+import '../../screens/product_detail_screen.dart';
+import '../../models/product.dart';
+
 class ProductItem extends StatelessWidget {
-  // TODO: Image;
-  final String title;
-  final String brand;
-  final String size;
+  final Product product;
 
   ProductItem({
-    @required this.title,
-    @required this.brand,
-    @required this.size,
+    @required this.product,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        //TODO: Send user to selected product.
-        print(title);
-      },
-      child: Card(
-        elevation: 0, // Makes the card appear more "futuristic".
-        margin: const EdgeInsets.all(10),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              // TODO: Change container/ to picture!
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).accentColor,
-                  width: double.infinity,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  children: [
-                    Text(
-                      title,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          brand,
-                        ),
-                        Text(
-                          size,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ],
+    return GridTile(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            ProductDetailScreen.routeName,
+            arguments: product,
+          );
+        },
+        child: Hero(
+          tag: product.id,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(product.imageUrl),
+            fit: BoxFit.cover,
           ),
         ),
+      ),
+      footer: GridTileBar(
+        backgroundColor: Colors.black45,
+        title: Text(product.title),
+        subtitle: Text(product.size),
       ),
     );
   }
