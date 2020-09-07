@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screens/auth_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/tab_screen.dart';
+import 'screens/product_detail_screen.dart';
 import 'lang/my_localizations.dart';
 import 'lang/my_localizations_delegate.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         const Locale('sv'), // Swedish
       ],
       theme: ThemeData(
-        primarySwatch: Colors.cyan,
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         backgroundColor: Color(0xfff1f9ff),
       ),
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
           return signedIn ? TabScreen() : AuthScreen();
         },
       ),
+      routes: {
+        ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+      },
     );
   }
 }

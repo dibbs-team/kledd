@@ -4,6 +4,7 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 
 import '../widgets/explore/no_products_display.dart';
 import '../widgets/explore/product_item.dart';
+import '../models/product.dart';
 
 class FeedScreen extends StatefulWidget {
   @override
@@ -28,14 +29,11 @@ class _FeedScreenState extends State<FeedScreen> {
         title: Text("Feed Screen"),
       ),
       body: RefreshIndicator(
-        backgroundColor: Theme.of(context).backgroundColor,
         onRefresh: _reloadProducts,
         child: PaginateFirestore(
           itemBuilderType: PaginateBuilderType.gridView,
           itemBuilder: (index, ctx, documentSnapshot) => ProductItem(
-            title: documentSnapshot.data['title'],
-            size: "Size", // TODO: Change this to actual size from server
-            brand: "Brand", // TODO change this to actual brand from server
+            product: Product.fromSnapshot(documentSnapshot),
           ),
           query: Firestore.instance.collection('products').orderBy('title'),
           emptyDisplay: NoProductsDisplay(),
@@ -43,6 +41,12 @@ class _FeedScreenState extends State<FeedScreen> {
           physics: AlwaysScrollableScrollPhysics(),
           itemsPerPage: 10,
           key: Key(_lastRefresh.toString()),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 3 / 4,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
         ),
       ),
     );
