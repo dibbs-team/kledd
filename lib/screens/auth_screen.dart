@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kledd/models/authenticationService.dart';
 
 import '../widgets/auth/login_button.dart';
 import '../lang/my_localizations.dart';
@@ -23,19 +24,37 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       key: _scaffoldKey,
       body: Center(
-        child: Container(
-          padding: EdgeInsets.all(50),
-          child: Align(
-            alignment: Alignment.center,
-            child: LoginButton(
-              service: 'Google',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/yourLogoHere.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              width: 200,
+              height: 200,
+            ),
+            LoginButton(
+              authenticationService: AuthenticationService.GOOGLE,
               onLoginUser: () {
                 _handleGoogleSignIn().catchError(
                   (e) => _showSnackbar(l10n.authFailed),
                 );
               },
             ),
-          ),
+            LoginButton(
+              authenticationService: AuthenticationService.FACEBOOK,
+              onLoginUser: () {
+                // TODO: Login with Facebook (issue #6)
+              },
+            ),
+          ],
         ),
       ),
     );
