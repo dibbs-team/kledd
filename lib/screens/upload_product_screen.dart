@@ -2,88 +2,136 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-import '../widgets/upload/text_input_field.dart';
-import '../models/product.dart';
+import '../widgets/upload/upload_step.dart';
+import '../widgets/upload/pictures_step.dart';
+import '../widgets/upload/description_step.dart';
+import '../widgets/upload/rules_step.dart';
+import '../widgets/upload/payment_step.dart';
 import '../lang/my_localizations.dart';
+import '../models/product.dart';
 
-class UploadProductScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  // TODO: Refactor to use the fields from the product design.
-  final _titleInput = TextInputField(
-    title: 'Title',
-    hint: 'Title...',
-  );
-  final _brandInput = TextInputField(
-    title: 'Brand',
-    hint: 'Brand...',
-  );
-  final _sizeInput = TextInputField(
-    title: 'Size',
-    hint: 'Size...',
-  );
-  final _descriptionInput = TextInputField(
-    title: 'Description',
-    hint: 'Description...',
-  );
+class UploadProductScreen extends StatefulWidget {
+  @override
+  _UploadProductScreenState createState() => _UploadProductScreenState();
+}
 
-  showUploadResultSnackBar(BuildContext ctx, {bool success}) {
-    final l10n = MyLocalizations.of(ctx);
-    Scaffold.of(ctx).showSnackBar(
-      SnackBar(
-        content:
-            Text(success ? l10n.successfulUpload : l10n.unsuccessfulUpload),
-      ),
-    );
+class _UploadProductScreenState extends State<UploadProductScreen> {
+  static const _numberOfSteps = 4;
+
+  final _picturesStep = PicturesStep(1);
+  final _descriptionStep = DescriptionStep(2);
+  final _rulesStep = RulesStep(3);
+  final _paymentStep = PaymentStep(4);
+  var _currentStep = 1;
+
+  /// Uploads the product to Firestore. Returns wheter action was succesful.
+  Future<bool> _uploadProduct(BuildContext ctx) async {
+    try {
+      final user = auth.FirebaseAuth.instance.currentUser;
+      await FirebaseFirestore.instance.collection('products').add(
+            Product.generateAddData(
+              renter: user.uid,
+              title: _descriptionStep.title,
+              imageUrl: _picturesStep.imageUrl,
+              brand: _descriptionStep.brand,
+              size: _descriptionStep.size,
+              description: _descriptionStep.description,
+              price: _paymentStep.priceDay,
+              rentingRules: _rulesStep.rules,
+            ),
+          );
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
-  resetInput() {
-    _titleInput.clear();
-    _brandInput.clear();
-    _sizeInput.clear();
-    _descriptionInput.clear();
+  Future<void> _finishStep() async {
+    if (_currentStep == _numberOfSteps) {
+      var res = await _uploadProduct(context);
+      //* Communicates result of upload to parent screen.
+      Navigator.of(context).pop(res);
+    } else {
+      setState(() {
+        _currentStep += 1; // Navigates to next step.
+      });
+    }
+  }
+
+  UploadStep _getCurrentStep() {
+    switch (_currentStep) {
+      case 1:
+        return _picturesStep;
+      case 2:
+        return _descriptionStep;
+      case 3:
+        return _rulesStep;
+      case 4:
+        return _paymentStep;
+      default:
+        throw StateError(
+            "_currentStep is out of bounds. It was $_currentStep.");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Upload Screen"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          if (_formKey.currentState.validate()) {
-            try {
-              final auth.User user = auth.FirebaseAuth.instance.currentUser;
-              await FirebaseFirestore.instance.collection('products').add(
-                    Product.generateAddData(
-                      renter: user.uid,
-                      title: _titleInput.text,
-                      // TODO: Use own image.
-                      imageUrl:
-                          "https://www.lulus.com/images/product/xlarge/3301380_667902.jpg",
-                      brand: _brandInput.text,
-                      size: _sizeInput.text,
-                      description: _descriptionInput.text,
+    final l10n = MyLocalizations.of(context);
+    final currentStep = _getCurrentStep();
+
+    return WillPopScope(
+      onWillPop: () async {
+        //* This can happen if the user presses the back button on Android.
+        if (_currentStep == 1) {
+          return true; // Pop this screen.
+        }
+        setState(() {
+          _currentStep -= 1; // Navigate to previous step.
+        });
+        return false; // Do not pop this screen.
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          // Do not show back button on first step.
+          leading: _currentStep == 1 ? Container() : BackButton(),
+          title: Text(
+            l10n.uploadStep(
+              current: _currentStep,
+              total: _numberOfSteps,
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+        body: Container(
+          height: double.maxFinite,
+          child: Stack(
+            children: <Widget>[
+              currentStep,
+              Positioned(
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Container(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      child: Text(_currentStep == _numberOfSteps
+                          ? l10n.uploadProduct
+                          : l10n.nextStep),
+                      onPressed: () {
+                        if (currentStep.validate()) {
+                          _finishStep();
+                        }
+                      },
                     ),
-                  );
-              showUploadResultSnackBar(context, success: true);
-              resetInput();
-            } catch (error) {
-              showUploadResultSnackBar(context, success: false);
-            }
-          }
-        },
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              _titleInput,
-              _brandInput,
-              _sizeInput,
-              _descriptionInput,
+                  ),
+                ),
+              )
             ],
           ),
         ),

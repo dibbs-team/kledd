@@ -69,4 +69,66 @@ class MyLocalizations {
         name: 'unsuccessfulUpload',
         desc: 'Shown in snackbar after upload was unsuccessful.',
       );
+
+  String get nextStep => Intl.message(
+        'Next',
+        name: 'nextStep',
+        desc: 'Text on button to go to next step when uploading a product.',
+      );
+
+  String get uploadProduct => Intl.message(
+        'Publish',
+        name: 'uploadProduct',
+        desc: 'Text on button to upload a product.',
+      );
+
+  String get errorOccured => Intl.message(
+        'An error occured.',
+        name: 'errorOccured',
+        desc: 'General error occured text. Shown in for example a snackbar.',
+      );
+
+  String uploadStep({
+    @required int current,
+    @required int total,
+  }) =>
+      Intl.message(
+        'Step $current/$total',
+        name: 'uploadStep',
+        args: [current, total],
+        desc: 'AppBar text on when uploading product.',
+        examples: const {'current': 2, 'total': 4},
+      );
+
+  String picturesStepTitle(int step) => Intl.message(
+        '$step. Upload pictures',
+        name: 'picturesStepTitle',
+        args: [step],
+        desc: 'Title on pictures step when uploading product.',
+        examples: const {'step': 1},
+      );
+
+  String descriptionStepTitle(int step) => Intl.message(
+        '$step. Describe your item',
+        name: 'descriptionStepTitle',
+        args: [step],
+        desc: 'Title on description step when uploading product.',
+        examples: const {'step': 2},
+      );
+
+  String rulesStepTitle(int step) => Intl.message(
+        '$step. Set your rules',
+        name: 'rulesStepTitle',
+        args: [step],
+        desc: 'Title on rules step when uploading product.',
+        examples: const {'step': 3},
+      );
+
+  String paymentStepTitle(int step) => Intl.message(
+        '$step. Set up payment',
+        name: 'paymentStepTitle',
+        args: [step],
+        desc: 'Title on payment step when uploading product.',
+        examples: const {'step': 4},
+      );
 }
