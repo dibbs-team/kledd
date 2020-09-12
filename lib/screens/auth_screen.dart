@@ -41,6 +41,9 @@ class _AuthScreenState extends State<AuthScreen> {
               width: 200,
               height: 200,
             ),
+            SizedBox(
+              height: 100,
+            ),
             LoginButton(
               authenticationService: AuthenticationService.GOOGLE,
               onLoginUser: () {

@@ -38,6 +38,18 @@ class MyLocalizations {
         name: 'title',
         desc: 'App title',
       );
+    
+  String get rentingRules => Intl.message(
+    'Renting rules',
+    name: 'rentinRules',
+    desc: 'Renting rules title',
+  );
+
+  String get description => Intl.message(
+    'Description',
+    name: 'description',
+    desc: 'Description title'
+  );
 
   String signInButtonText(String service) => Intl.message(
         'Sign in with $service',
