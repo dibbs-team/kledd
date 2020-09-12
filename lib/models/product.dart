@@ -9,6 +9,8 @@ class Product {
   final String brand;
   final String size;
   final String description;
+  final double price;
+  final String rentingRules;
 
   Product({
     @required this.id,
@@ -18,6 +20,8 @@ class Product {
     @required this.brand,
     @required this.size,
     @required this.description,
+    @required this.price,
+    @required this.rentingRules,
   });
 
   /// Creates a product from a documentSapshot (result of query from Firestore).
@@ -31,17 +35,21 @@ class Product {
       brand: data['brand'],
       imageUrl: data['image'],
       description: data['description'],
+      price: data['price'],
+      rentingRules: data['rules'],
     );
   }
 
   /// Generates data for adding a product to Firestore.
   static Map<String, Object> generateAddData({
-    @required renter,
-    @required title,
-    @required imageUrl,
-    @required brand,
-    @required size,
-    @required description,
+    @required String renter,
+    @required String title,
+    @required String imageUrl,
+    @required String brand,
+    @required String size,
+    @required String description,
+    @required double price,
+    @required String rentingRules,
   }) {
     return {
       'renter': renter,
@@ -50,6 +58,8 @@ class Product {
       'brand': brand,
       'size': size,
       'description': description,
+      'price': price,
+      'rules': rentingRules,
     };
   }
 }
