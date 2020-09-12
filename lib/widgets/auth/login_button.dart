@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:kledd/models/authenticationService.dart';
+import 'package:kledd/models/authentication_service.dart';
 
 import '../../lang/my_localizations.dart';
 
