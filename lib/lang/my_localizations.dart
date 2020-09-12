@@ -51,4 +51,22 @@ class MyLocalizations {
       Intl.message('Authentication failed. Please try again.',
           name: 'authFailed',
           desc: 'Shown in snackbar if authentication is unsuccessful');
+
+  String get requiredField => Intl.message(
+        'This field is required.',
+        name: 'requiredField',
+        desc: 'Shown in input form when required field is empty.',
+      );
+
+  String get successfulUpload => Intl.message(
+        'Product upload was successful.',
+        name: 'successfulUpload',
+        desc: 'Shown in snackbar after upload was successful.',
+      );
+
+  String get unsuccessfulUpload => Intl.message(
+        'Product upload was unsuccessful.',
+        name: 'unsuccessfulUpload',
+        desc: 'Shown in snackbar after upload was unsuccessful.',
+      );
 }

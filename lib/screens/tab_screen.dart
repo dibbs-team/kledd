@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'feed_screen.dart';
-import 'upload_item_screen.dart';
+import 'upload_product_screen.dart';
 import 'profile_screen.dart';
 
 class TabScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class _TabScreenState extends State<TabScreen> {
 
   static final List<Widget> _tabs = <Widget>[
     FeedScreen(),
-    UploadItemScreen(),
+    UploadProductScreen(),
     ProfileScreen(),
   ];
 
