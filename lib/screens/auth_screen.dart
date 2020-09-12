@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kledd/models/authenticationService.dart';
+import 'package:kledd/models/authentication_service.dart';
 
 import '../widgets/auth/login_button.dart';
 import '../lang/my_localizations.dart';
