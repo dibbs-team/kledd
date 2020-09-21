@@ -6,6 +6,7 @@ import 'package:kledd/models/authentication_service.dart';
 
 import '../widgets/auth/login_button.dart';
 import '../lang/my_localizations.dart';
+import '../utils/show_snackbar.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -44,7 +45,10 @@ class _AuthScreenState extends State<AuthScreen> {
               authenticationService: AuthenticationService.GOOGLE,
               onLoginUser: () {
                 _handleGoogleSignIn().catchError(
-                  (e) => _showSnackbar(l10n.authFailed),
+                  (e) => showSnackbar(
+                    key: _scaffoldKey,
+                    message: l10n.authFailed,
+                  ),
                 );
               },
             ),
@@ -86,15 +90,6 @@ class _AuthScreenState extends State<AuthScreen> {
         'profile_image_url': user.photoUrl,
         'phone_number': user.phoneNumber,
       },
-    );
-  }
-
-  /// Shows a SnackBar with the given message.
-  void _showSnackbar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
     );
   }
 }
