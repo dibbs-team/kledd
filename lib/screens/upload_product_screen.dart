@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 import '../widgets/upload/text_input_field.dart';
 import '../models/product.dart';
@@ -54,9 +54,8 @@ class UploadProductScreen extends StatelessWidget {
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             try {
-              final FirebaseUser user =
-                  await FirebaseAuth.instance.currentUser();
-              await Firestore.instance.collection('products').add(
+              final auth.User user = auth.FirebaseAuth.instance.currentUser;
+              await FirebaseFirestore.instance.collection('products').add(
                     Product.generateAddData(
                       renter: user.uid,
                       title: _titleInput.text,
