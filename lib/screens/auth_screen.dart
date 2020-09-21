@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kledd/models/authentication_service.dart';
 
@@ -14,8 +14,8 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn();
+  final _auth = auth.FirebaseAuth.instance;
   final _scaffoldKey = GlobalKey<ScaffoldState>(); //* For showing SnackBar.
 
   @override
@@ -70,24 +70,23 @@ class _AuthScreenState extends State<AuthScreen> {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final credential = auth.GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential)).user;
+    final user = (await _auth.signInWithCredential(credential)).user;
 
     await _saveUser(user);
   }
 
   /// Saves user information to Firestore.
-  Future<void> _saveUser(FirebaseUser user) async {
-    Firestore.instance.collection('users').document(user.uid).setData(
+  Future<void> _saveUser(auth.User user) async {
+    FirebaseFirestore.instance.collection('users').doc(user.uid).set(
       {
         'display_name': user.displayName,
         'email': user.email,
-        'profile_image_url': user.photoUrl,
+        'profile_image_url': user.photoURL,
         'phone_number': user.phoneNumber,
       },
     );

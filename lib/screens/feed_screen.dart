@@ -35,7 +35,9 @@ class _FeedScreenState extends State<FeedScreen> {
           itemBuilder: (index, ctx, documentSnapshot) => ProductItem(
             product: Product.fromSnapshot(documentSnapshot),
           ),
-          query: Firestore.instance.collection('products').orderBy('title'),
+          query: FirebaseFirestore.instance
+              .collection('products')
+              .orderBy('title'),
           emptyDisplay: NoProductsDisplay(),
           // Important to use AlwaysScrollableScrollPhysics in RefreshIndicator.
           physics: AlwaysScrollableScrollPhysics(),

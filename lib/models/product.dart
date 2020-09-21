@@ -22,14 +22,15 @@ class Product {
 
   /// Creates a product from a documentSapshot (result of query from Firestore).
   static Product fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data();
     return Product(
-      id: snapshot.documentID,
-      renter: snapshot.data['renter'],
-      title: snapshot.data['title'],
-      size: snapshot.data['size'],
-      brand: snapshot.data['brand'],
-      imageUrl: snapshot.data['image'],
-      description: snapshot.data['description'],
+      id: snapshot.id,
+      renter: data['renter'],
+      title: data['title'],
+      size: data['size'],
+      brand: data['brand'],
+      imageUrl: data['image'],
+      description: data['description'],
     );
   }
 
