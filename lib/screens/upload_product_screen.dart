@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -27,12 +28,33 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
   /// Uploads the product to Firestore. Returns wheter action was succesful.
   Future<bool> _uploadProduct(BuildContext ctx) async {
     try {
+      // Get reference to current user.
       final user = auth.FirebaseAuth.instance.currentUser;
-      await FirebaseFirestore.instance.collection('products').add(
+
+      // Create a product to get a reference to an entry in the database.
+      final productRef =
+          await FirebaseFirestore.instance.collection('products').add({});
+
+      // Upload the product image.
+      final imageRef = FirebaseStorage.instance
+          .ref()
+          .child('product_image')
+          .child(productRef.id)
+          .child('1.jpg');
+      await imageRef.putFile(_picturesStep.image).onComplete;
+
+      // Save an URL to the image.
+      var imageUrl = await imageRef.getDownloadURL();
+
+      // Upload the product.
+      await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productRef.id)
+          .set(
             Product.generateAddData(
               renter: user.uid,
               title: _descriptionStep.title,
-              imageUrl: _picturesStep.imageUrl,
+              imageUrl: imageUrl,
               brand: _descriptionStep.brand,
               size: _descriptionStep.size,
               description: _descriptionStep.description,
