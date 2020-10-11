@@ -38,18 +38,36 @@ class MyLocalizations {
         name: 'title',
         desc: 'App title',
       );
-    
+
+  String get feedScreenTitle => Intl.message(
+        'Explore',
+        name: 'feedScreenTitle',
+        desc: 'Name of feed screen.',
+      );
+
+  String get uploadScreenTitle => Intl.message(
+        'Upload product',
+        name: 'uploadScreenTitle',
+        desc: 'Name of upload screen.',
+      );
+
+  String get profileScreenTitle => Intl.message(
+        'Profile',
+        name: 'profileScreenTitle',
+        desc: 'Name of profile screen.',
+      );
+
   String get rentingRules => Intl.message(
-    'Renting rules',
-    name: 'rentinRules',
-    desc: 'Renting rules title',
-  );
+        'Renting rules',
+        name: 'rentinRules',
+        desc: 'Renting rules title.',
+      );
 
   String get description => Intl.message(
-    'Description',
-    name: 'description',
-    desc: 'Description title'
-  );
+        'Description',
+        name: 'description',
+        desc: 'Description title',
+      );
 
   String signInButtonText(String service) => Intl.message(
         'Sign in with $service',
@@ -62,7 +80,7 @@ class MyLocalizations {
   String get authFailed =>
       Intl.message('Authentication failed. Please try again.',
           name: 'authFailed',
-          desc: 'Shown in snackbar if authentication is unsuccessful');
+          desc: 'Shown in snackbar if authentication is unsuccessful.');
 
   String get requiredField => Intl.message(
         'This field is required.',
@@ -142,5 +160,11 @@ class MyLocalizations {
         args: [step],
         desc: 'Title on payment step when uploading product.',
         examples: const {'step': 4},
+      );
+
+  String get signOut => Intl.message(
+        'Sign out',
+        name: 'signOut',
+        desc: 'Sign out, showed on button for signing out.',
       );
 }

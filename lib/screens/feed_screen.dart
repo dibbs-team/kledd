@@ -5,6 +5,7 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 import '../widgets/explore/no_products_display.dart';
 import '../widgets/explore/product_item.dart';
 import '../models/product.dart';
+import '../lang/my_localizations.dart';
 
 class FeedScreen extends StatefulWidget {
   @override
@@ -24,9 +25,11 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = MyLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Feed Screen"),
+        title: Text(l10n.feedScreenTitle),
       ),
       body: RefreshIndicator(
         onRefresh: _reloadProducts,
