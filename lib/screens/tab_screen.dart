@@ -52,6 +52,8 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = MyLocalizations.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       body: _tabs.elementAt(_selectedIndex),
@@ -59,15 +61,15 @@ class _TabScreenState extends State<TabScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.view_day),
-            title: Text(""), // TODO: Add title (same as AppBar title).
+            label: l10n.feedScreenTitle,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            title: Text(""), // TODO: Add title (same as AppBar title).
+            label: l10n.uploadScreenTitle,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            title: Text(""), // TODO: Add title (same as AppBar title).
+            label: l10n.profileScreenTitle,
           ),
         ],
         showSelectedLabels: false,
