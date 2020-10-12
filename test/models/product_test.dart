@@ -6,7 +6,7 @@ void main() {
   group(
     'Convertion tests',
     () {
-      String renter = '<renter>';
+      String uploader = '<uploader>';
       String title = '<title>';
       String imageUrl = '<imageUrl>';
       String brand = '<brand>';
@@ -20,7 +20,7 @@ void main() {
         () {
           expect(
             Product.generateAddData(
-              renter: renter,
+              uploader: uploader,
               title: title,
               imageUrl: imageUrl,
               brand: brand,
@@ -30,7 +30,7 @@ void main() {
               rentingRules: rentingRules,
             ),
             {
-              'renter': renter,
+              'uploader': uploader,
               'title': title,
               'image': imageUrl,
               'brand': brand,

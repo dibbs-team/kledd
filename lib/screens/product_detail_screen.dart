@@ -47,8 +47,8 @@ class ProductDetailScreen extends StatelessWidget {
                   description: product.description,
                 ),
                 DescriptionDivider(),
-                ProductRenter(
-                  renter: product.renter,
+                ProductUploader(
+                  uploaderId: product.uploader,
                 ),
                 DescriptionDivider(),
                 ProductRentingRules(

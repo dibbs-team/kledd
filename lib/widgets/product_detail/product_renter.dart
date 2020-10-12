@@ -1,66 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProductRenter extends StatelessWidget {
-  final String renter;
+import '../../models/user.dart';
 
-  ProductRenter({
-    @required this.renter,
+class ProductUploader extends StatelessWidget {
+  final String uploaderId;
+
+  ProductUploader({
+    @required this.uploaderId,
   });
+
+  /// Requests information about the user that uploaded the product.
+  Future<DocumentSnapshot> getUploader() async {
+    return FirebaseFirestore.instance.collection('users').doc(uploaderId).get();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // TODO: If picture of renter is available show this instead of icon.
-          Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.account_circle,
-              size: 60,
-              color: Theme.of(context).accentColor,
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Container(
-            height: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  renter,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor,
-                    fontSize: 14,
-                  ),
-                ),
-                Row(
+    return FutureBuilder<DocumentSnapshot>(
+      future: getUploader(),
+      builder: (ctx, snapshot) {
+        User uploader;
+        if (snapshot.hasData) {
+          uploader = User.fromSnapshot(snapshot.data);
+        }
+        return Container(
+          padding: const EdgeInsets.all(10),
+          width: double.infinity,
+          child: uploader != null
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.star,
-                      color: Theme.of(context).accentColor,
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage(uploader.imageUrl),
                     ),
-                    // TODO: change this number to actual rating of the renter
-                    Text("4.62"),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            uploader.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).accentColor,
+                              fontSize: 14,
+                            ),
+                          ),
+                          if (uploader.rating != null)
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Theme.of(context).accentColor,
+                                ),
+                                Text(uploader.rating.toStringAsFixed(1)),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
                   ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

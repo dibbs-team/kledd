@@ -52,7 +52,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
           .doc(productRef.id)
           .set(
             Product.generateAddData(
-              renter: user.uid,
+              uploader: user.uid,
               title: _descriptionStep.title,
               imageUrl: imageUrl,
               brand: _descriptionStep.brand,

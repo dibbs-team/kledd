@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
   final String id;
-  final String renter;
+  final String uploader;
   final String title;
   final String imageUrl;
   final String brand;
@@ -14,7 +14,7 @@ class Product {
 
   Product({
     @required this.id,
-    @required this.renter,
+    @required this.uploader,
     @required this.title,
     @required this.imageUrl,
     @required this.brand,
@@ -24,12 +24,12 @@ class Product {
     @required this.rentingRules,
   });
 
-  /// Creates a product from a documentSapshot (result of query from Firestore).
+  /// Creates a product from a documentSnapshot (result of query from Firestore).
   static Product fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data();
     return Product(
       id: snapshot.id,
-      renter: data['renter'],
+      uploader: data['uploader'],
       title: data['title'],
       size: data['size'],
       brand: data['brand'],
@@ -42,7 +42,7 @@ class Product {
 
   /// Generates data for adding a product to Firestore.
   static Map<String, Object> generateAddData({
-    @required String renter,
+    @required String uploader,
     @required String title,
     @required String imageUrl,
     @required String brand,
@@ -52,7 +52,7 @@ class Product {
     @required String rentingRules,
   }) {
     return {
-      'renter': renter,
+      'uploader': uploader,
       'title': title,
       'image': imageUrl,
       'brand': brand,
