@@ -30,7 +30,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
       final user = auth.FirebaseAuth.instance.currentUser;
       await FirebaseFirestore.instance.collection('products').add(
             Product.generateAddData(
-              renter: user.uid,
+              uploader: user.uid,
               title: _descriptionStep.title,
               imageUrl: _picturesStep.imageUrl,
               brand: _descriptionStep.brand,
