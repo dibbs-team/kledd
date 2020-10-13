@@ -5,8 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/auth_screen.dart';
 import 'screens/splash_screen.dart';
-import 'screens/tab_screen.dart';
 import 'screens/product_detail_screen.dart';
+import 'widgets/information/sign_in_transition.dart';
 import 'lang/my_localizations.dart';
 import 'lang/my_localizations_delegate.dart';
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             return SplashScreen();
           }
           var signedIn = userSnapshot.hasData;
-          return signedIn ? TabScreen() : AuthScreen();
+          return signedIn ? SignInTransition() : AuthScreen();
         },
       ),
       routes: {
