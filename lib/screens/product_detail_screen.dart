@@ -39,7 +39,7 @@ class ProductDetailScreen extends StatelessWidget {
               [
                 ProductInfo(
                   brand: product.brand,
-                  size: product.size,
+                  size: product.size.getSizeAsString(),
                   title: product.title,
                 ),
                 DescriptionDivider(),

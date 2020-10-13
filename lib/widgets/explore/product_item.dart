@@ -32,7 +32,7 @@ class ProductItem extends StatelessWidget {
       footer: GridTileBar(
         backgroundColor: Colors.black45,
         title: Text(product.title),
-        subtitle: Text(product.size),
+        subtitle: Text(product.size.getSizeAsString()),
       ),
     );
   }

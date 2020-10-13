@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import './clothing_size.dart';
+
 class Product {
   final String id;
   final String uploader;
   final String title;
   final String imageUrl;
   final String brand;
-  final String size;
+  final ClothingSize size;
   final String description;
   final double price;
   final String rentingRules;
@@ -31,7 +33,7 @@ class Product {
       id: snapshot.id,
       uploader: data['uploader'],
       title: data['title'],
-      size: data['size'],
+      size: ClothingSize.fromString(data['size']),
       brand: data['brand'],
       imageUrl: data['image'],
       description: data['description'],
