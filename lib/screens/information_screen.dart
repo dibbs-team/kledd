@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../widgets/information_segment.dart';
+import '../widgets/information/information_segment.dart';
 
 class InformationScreen extends StatefulWidget {
+  final Function onClose;
+
+  InformationScreen({@required this.onClose});
+
   @override
   _InformationScreenState createState() => _InformationScreenState();
 }
@@ -57,9 +61,7 @@ class _InformationScreenState extends State<InformationScreen> {
           Container(
             width: 200,
             child: FlatButton(
-              onPressed: () {
-                // TODO: Close.
-              },
+              onPressed: widget.onClose,
               child: Text('Let\'s start!'),
               color: Theme.of(context).accentColor,
             ),
