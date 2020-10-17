@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:tap_debouncer/tap_debouncer.dart';
 
 import '../widgets/upload/upload_step.dart';
 import '../widgets/upload/pictures_step.dart';
@@ -141,15 +142,18 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                   alignment: FractionalOffset.bottomCenter,
                   child: Container(
                     width: double.infinity,
-                    child: RaisedButton(
-                      child: Text(_currentStep == _numberOfSteps
-                          ? l10n.uploadProduct
-                          : l10n.nextStep),
-                      onPressed: () {
+                    child: TapDebouncer(
+                      onTap: () async {
                         if (currentStep.validate()) {
-                          _finishStep();
+                          await _finishStep();
                         }
                       },
+                      builder: (ctx, onTap) => RaisedButton(
+                        child: Text(_currentStep == _numberOfSteps
+                            ? l10n.uploadProduct
+                            : l10n.nextStep),
+                        onPressed: onTap,
+                      ),
                     ),
                   ),
                 ),
