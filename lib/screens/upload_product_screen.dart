@@ -42,7 +42,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
           .child('product_image')
           .child(productRef.id)
           .child('1.jpg');
-      await imageRef.putFile(_picturesStep.image).onComplete;
+      await imageRef.putFile(_picturesStep.image);
 
       // Save an URL to the image.
       var imageUrl = await imageRef.getDownloadURL();
